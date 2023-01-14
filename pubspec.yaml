@@ -20,4 +20,7 @@ flutter:
   uses-material-design: true
   assets: 
    - assets/images/sp.png
+   - assets/images/Facebook.png
+   - assets/images/Google.png
+   - assets/images/Group 2.png
 
