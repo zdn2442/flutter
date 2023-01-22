@@ -192,7 +192,7 @@ class RegisterView extends GetView<RegisterController> {
                       child: ElevatedButton(
                         onPressed: () => print("pressed"),
                         child: Text(
-                          "Login",
+                          "Register",
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w500,

@@ -2,25 +2,59 @@ name: tokped
 version: 1.0.0+1
 publish_to: none
 description: A new Flutter project.
-environment: 
+environment:
   sdk: '>=2.18.0 <3.0.0'
 
-dependencies: 
+dependencies:
+  carousel_slider: ^4.2.1
   cupertino_icons: ^1.0.2
+  flutter:
+    sdk: flutter
   get: 4.6.5
-  flutter: 
-    sdk: flutter
+  step_progress_indicator: ^1.0.2
 
-dev_dependencies: 
+dev_dependencies:
   flutter_lints: ^2.0.0
-  flutter_test: 
+  flutter_test:
     sdk: flutter
 
-flutter: 
+flutter:
   uses-material-design: true
-  assets: 
-   - assets/images/sp.png
-   - assets/images/Facebook.png
-   - assets/images/Google.png
-   - assets/images/Group 2.png
+  assets:
+    - assets/images/sp.png
+    - assets/images/Facebook.png
+    - assets/images/Google.png
+    - assets/images/Group 2.png
+    - assets/images/Group 20.png
+    - assets/images/Group 19.png
+    - assets/images/kejuParut.png
+    - assets/images/bebasOngkir.png
+    - assets/images/kebut.png
+    - assets/images/lihatSemua.png
+    - assets/images/banggaLokal.png
+    - assets/images/cod.png
+    - assets/images/elektronik.png
+    - assets/images/live.png
+    - assets/images/official.png
+    - assets/images/promo.png
+    - assets/images/seru.png
+    - assets/images/toserba.png
+    - assets/images/topUp.png
+    - assets/images/kejarDiskon.png
+    - assets/images/softies.png
+    - assets/images/indomie.png
+    - assets/images/ceklis.png
+    - assets/images/KamisBebasKuman.png
+    - assets/images/ohBeauty.png
+    - assets/images/megaElectro.png
+    - assets/images/mousePad.png
+    - assets/images/RainbowMouse.png
+    - assets/images/lightspeedMouse.png
+    - assets/images/merchant.png
+    - assets/images/rivalMouse.png
+    - assets/images/tipi.png
+    - assets/images/mousePro.png
+    - assets/images/colokan.png
+
+
 
