@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import 'package:tokped/app/modules/detail/bindings/detail_binding.dart';
+import 'package:tokped/app/modules/detail/views/detail_view.dart';
 import 'package:tokped/app/modules/forgotPass/bindings/forgot_pass_binding.dart';
 import 'package:tokped/app/modules/forgotPass/views/forgot_pass_view.dart';
 import 'package:tokped/app/modules/home/bindings/home_binding.dart';
@@ -18,7 +20,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.SPLASH;
+  static const INITIAL = Routes.DETAIL;
 
   static final routes = [
     GetPage(
@@ -50,6 +52,11 @@ class AppPages {
       name: _Paths.VERIFY,
       page: () => VerifyView(),
       binding: VerifyBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL,
+      page: () => DetailView(),
+      binding: DetailBinding(),
     ),
   ];
 }

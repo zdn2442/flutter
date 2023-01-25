@@ -11,3 +11,5 @@ Color warnaDiskon = const Color(0x1aD6001C);
 Color warnaStepKosong = const Color(0xffEEEEEE);
 Color warnaGaris = Color.fromARGB(44, 23, 23, 52);
 Color abuAbu = const Color.fromARGB(127, 27, 27, 27);
+Color warnaCashback = const Color(0x1a03A759);
+Color bintang = const Color(0xffffc400);
