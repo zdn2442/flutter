@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tokped/config/warna.dart';
 
+import '../../../controllers/auth_controller.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
+  final authC = Get.put(AuthController());
   final controller = Get.put(LoginController());
 
   @override
@@ -72,6 +74,7 @@ class LoginView extends GetView<LoginController> {
                           Container(
                             padding: EdgeInsets.only(top: 20),
                             child: TextField(
+                              controller: controller.email,
                               decoration: InputDecoration(
                                   labelText: "Enter your Email",
                                   labelStyle: TextStyle(
@@ -101,6 +104,7 @@ class LoginView extends GetView<LoginController> {
                           Container(
                             padding: EdgeInsets.only(top: 20),
                             child: TextField(
+                              controller: controller.password,
                               obscureText: controller.hiddenPassword.value
                                   ? true
                                   : false,

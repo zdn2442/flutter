@@ -9,6 +9,7 @@ import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:tokped/config/warna.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
+import '../../../routes/app_pages.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -493,15 +494,18 @@ class HomeView extends GetView<HomeController> {
                     SizedBox(
                       width: 25,
                     ),
-                    ProdukCard(
-                        produk: 'Logitech G603 Lightspeed High DPI',
-                        daerah: 'Kab. Bandung',
-                        diskon: '44%',
-                        gambar: 'assets/images/lightspeedMouse.png',
-                        harga: 'Rp 609.000',
-                        potongan: 'Rp 1.000.000',
-                        rating: '4.8',
-                        terjual: '312'),
+                    InkWell(
+                      onTap: () => Get.toNamed(Routes.DETAIL),
+                      child: ProdukCard(
+                          produk: 'Logitech G603 Lightspeed High DPI',
+                          daerah: 'Kab. Bandung',
+                          diskon: '44%',
+                          gambar: 'assets/images/lightspeedMouse.png',
+                          harga: 'Rp 609.000',
+                          potongan: 'Rp 1.000.000',
+                          rating: '4.8',
+                          terjual: '312'),
+                    ),
                     ProdukCard(
                         produk: 'Logitech G203 Mouse Gaming',
                         daerah: 'Kab. Bandung',

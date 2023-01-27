@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
@@ -6,6 +7,10 @@ class LoginController extends GetxController {
   changeEye() => hiddenPassword.toggle();
 
   final count = 0.obs;
+
+  TextEditingController email = TextEditingController(),
+      password = TextEditingController();
+
   @override
   void onInit() {
     super.onInit();
