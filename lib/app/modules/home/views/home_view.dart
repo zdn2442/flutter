@@ -9,10 +9,13 @@ import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:tokped/config/warna.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
+import '../../../controllers/auth_controller.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
+  final authC = Get.put(AuthController());
+  
   @override
   Widget build(BuildContext context) {
     double tinggi = MediaQuery.of(context).size.height;
@@ -55,10 +58,13 @@ class HomeView extends GetView<HomeController> {
                         color: Colors.white,
                         size: 30,
                       ),
-                      Icon(
-                        Icons.menu,
-                        color: Colors.white,
-                        size: 30,
+                      InkWell(
+                        onTap: () => authC.logout(),
+                        child: Icon(
+                          Icons.menu,
+                          color: Colors.white,
+                          size: 30,
+                        ),
                       )
                     ],
                   ),

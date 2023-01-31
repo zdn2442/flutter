@@ -146,7 +146,8 @@ class LoginView extends GetView<LoginController> {
                       width: lebar,
                       height: tinggi * 0.05,
                       child: ElevatedButton(
-                        onPressed: () => Get.toNamed(Routes.HOME),
+                        onPressed: () => authC.login(controller.email.text,
+                                controller.password.text),
                         child: Text(
                           "Login",
                           style: TextStyle(

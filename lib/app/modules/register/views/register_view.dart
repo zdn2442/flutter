@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../config/warna.dart';
+import '../../../controllers/auth_controller.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/register_controller.dart';
 
 class RegisterView extends GetView<RegisterController> {
+  final authC = Get.put(AuthController());
+  final controller = Get.put(RegisterController());
   @override
   Widget build(BuildContext context) {
     double tinggi = MediaQuery.of(context).size.height;
@@ -76,6 +79,7 @@ class RegisterView extends GetView<RegisterController> {
                           Container(
                             padding: EdgeInsets.only(top: 20),
                             child: TextField(
+                              controller: controller.email,
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
                                   labelText: "Enter your Email",
@@ -162,6 +166,7 @@ class RegisterView extends GetView<RegisterController> {
                           Container(
                             padding: EdgeInsets.only(top: 20),
                             child: TextField(
+                              controller: controller.password,
                               obscureText: controller.hiddenPassword.value
                                   ? true
                                   : false,
@@ -190,7 +195,8 @@ class RegisterView extends GetView<RegisterController> {
                       width: lebar,
                       height: tinggi * 0.05,
                       child: ElevatedButton(
-                        onPressed: () => print("pressed"),
+                        onPressed: () => authC.register(controller.email.text,
+                                controller.password.text),
                         child: Text(
                           "Register",
                           style: TextStyle(
