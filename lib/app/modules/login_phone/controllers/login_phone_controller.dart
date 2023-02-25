@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-class ForgotPassController extends GetxController {
-  //TODO: Implement ForgotPassController
+class LoginPhoneController extends GetxController {
+  //TODO: Implement LoginPhoneController
 
   final count = 0.obs;
-  TextEditingController email = TextEditingController();
+  TextEditingController phone =TextEditingController();
   @override
   void onInit() {
     super.onInit();

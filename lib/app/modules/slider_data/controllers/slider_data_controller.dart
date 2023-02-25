@@ -1,14 +1,20 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:tokped/app/controllers/slider_controller.dart';
 
-class ForgotPassController extends GetxController {
-  //TODO: Implement ForgotPassController
+class SliderDataController extends GetxController {
+  //TODO: Implement SliderDataController
 
   final count = 0.obs;
-  TextEditingController email = TextEditingController();
+  var data;
   @override
   void onInit() {
     super.onInit();
+   data = SliderController().getData();
+    log("data get");
+    print(data);
   }
 
   @override

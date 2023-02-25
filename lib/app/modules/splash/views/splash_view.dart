@@ -89,6 +89,12 @@ class SplashView extends GetView<SplashController> {
                       child: Text(
                         "Login",
                         style: TextStyle(color: Colors.white),
+                      )),
+                      TextButton(
+                      onPressed: () => Get.toNamed(Routes.LOGIN_PHONE),
+                      child: Text(
+                        "Phone",
+                        style: TextStyle(color: Colors.white),
                       ))
                 ],
               ),

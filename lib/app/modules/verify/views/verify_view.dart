@@ -1,3 +1,4 @@
+import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -47,7 +48,14 @@ class VerifyView extends GetView<VerifyController> {
                     width: lebar * 0.50,
                     height: tinggi * 0.05,
                     child: ElevatedButton(
-                      onPressed: () => print("pressed"),
+                      onPressed: () async {
+                        await LaunchApp.openApp(
+                            androidPackageName: 'com.google.android.gm',
+                            iosUrlScheme: 'googlegmail://',
+                            appStoreLink:
+                                'itms-apps://apps.apple.com/us/app/gmail-email-by-google/id422689480',
+                            openStore: true);
+                      },
                       child: Text(
                         "Open Email App",
                         style: TextStyle(

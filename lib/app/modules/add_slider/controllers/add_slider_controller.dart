@@ -1,11 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-class ForgotPassController extends GetxController {
-  //TODO: Implement ForgotPassController
+class AddSliderController extends GetxController {
+  //TODO: Implement AddSliderController
+  var isStatus = false.obs;
 
   final count = 0.obs;
-  TextEditingController email = TextEditingController();
+  changeStatus() => isStatus.toggle();
   @override
   void onInit() {
     super.onInit();

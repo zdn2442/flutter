@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../controllers/auth_controller.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/forgot_pass_controller.dart';
 
 class ForgotPassView extends GetView<ForgotPassController> {
+  final authC = Get.put(AuthController());
+  final controller = Get.put(ForgotPassController());
   @override
   Widget build(BuildContext context) {
     double tinggi = MediaQuery.of(context).size.height;
@@ -77,6 +80,7 @@ class ForgotPassView extends GetView<ForgotPassController> {
                 Container(
                   padding: EdgeInsets.only(top: 20),
                   child: TextField(
+                    controller: controller.email,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                         labelText: "Enter your Email",
@@ -96,7 +100,7 @@ class ForgotPassView extends GetView<ForgotPassController> {
             width: lebar,
             height: tinggi * 0.05,
             child: ElevatedButton(
-              onPressed: () => Get.toNamed(Routes.VERIFY),
+              onPressed: () => authC.resetPassword(controller.email.text),
               child: Text(
                 "Send Instructions",
                 style: TextStyle(

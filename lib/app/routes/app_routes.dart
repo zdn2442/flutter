@@ -11,6 +11,12 @@ abstract class Routes {
   static const FORGOT_PASS = _Paths.FORGOT_PASS;
   static const VERIFY = _Paths.VERIFY;
   static const DETAIL = _Paths.DETAIL;
+  static const LOGIN_PHONE = _Paths.LOGIN_PHONE;
+  static const OTP = _Paths.OTP;
+  static const HOME_ADMIN = _Paths.HOME_ADMIN;
+  static const SLIDER_DATA = _Paths.SLIDER_DATA;
+  static const UPDATE_SLIDER = _Paths.UPDATE_SLIDER;
+  static const ADD_SLIDER = _Paths.ADD_SLIDER;
 }
 
 abstract class _Paths {
@@ -21,4 +27,10 @@ abstract class _Paths {
   static const FORGOT_PASS = '/forgot-pass';
   static const VERIFY = '/verify';
   static const DETAIL = '/detail';
+  static const LOGIN_PHONE = '/login-phone';
+  static const OTP = '/otp';
+  static const HOME_ADMIN = '/home-admin';
+  static const SLIDER_DATA = '/slider-data';
+  static const UPDATE_SLIDER = '/update-slider';
+  static const ADD_SLIDER = '/add-slider';
 }

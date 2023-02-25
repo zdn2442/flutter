@@ -236,7 +236,7 @@ class LoginView extends GetView<LoginController> {
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.white,
                                     shadowColor: Colors.white),
-                                onPressed: () => print("pressed"),
+                                onPressed: () => authC.signInWithGoogle(),
                                 child: Container(
                                   child: Row(
                                     children: [
