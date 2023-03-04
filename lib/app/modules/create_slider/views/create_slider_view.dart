@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:tokped/app/controllers/slider_controller.dart';
 import 'package:tokped/config/warna.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
-import '../../../controllers/slider_controller.dart';
-import '../controllers/add_slider_controller.dart';
+import '../controllers/create_slider_controller.dart';
 
-class AddSliderView extends GetView<AddSliderController> {
-  final controller = AddSliderController();
+class CreateSliderView extends GetView<CreateSliderController> {
+  final controller = Get.put(CreateSliderController());
   final sliderC = Get.put(SliderController());
   @override
- Widget build(BuildContext context) {
-      double tinggi = MediaQuery.of(context).size.height;
+  Widget build(BuildContext context) {
+    double tinggi = MediaQuery.of(context).size.height;
     double lebar = MediaQuery.of(context).size.width;
     return Obx(() => SafeArea(
             child: Scaffold(
@@ -26,13 +27,13 @@ class AddSliderView extends GetView<AddSliderController> {
                           gradient: LinearGradient(
                               begin: Alignment.topRight,
                               end: Alignment.bottomLeft,
-                              colors: [warnaGradient1, abuAbu]),
+                              colors: [warnaGradient1, warnaGaris]),
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(5),
                               bottomRight: Radius.circular(5))),
                       child: Center(
                         child: Text(
-                          "Update Slider",
+                          "Create Slider",
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
@@ -44,6 +45,9 @@ class AddSliderView extends GetView<AddSliderController> {
                       padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
                       child: Column(
                         children: [
+                          ElevatedButton(
+                              onPressed: () => controller.uploadGambar(),
+                              child: Text("Upload Photo")),
                           CustomInput(
                               controller: controller.gambarSlider,
                               label: 'Link gambar Slider',
@@ -71,16 +75,16 @@ class AddSliderView extends GetView<AddSliderController> {
                                           fontWeight: FontWeight.w500),
                                     ),
                                     Switch(
-                                        value: controller.active.value,
+                                        value: controller.aktifasi.value,
                                         onChanged: (value) =>
                                             controller.changeActivation()),
                                   ],
                                 ),
                                 Text(
-                                  controller.active.value.toString(),
+                                  controller.aktifasi.value.toString(),
                                   style: TextStyle(
                                       fontSize: 16,
-                                      color: controller.active.value
+                                      color: controller.aktifasi.value
                                           ? bgLogin
                                           : warnaMerah1,
                                       fontWeight: FontWeight.w500),
@@ -96,7 +100,7 @@ class AddSliderView extends GetView<AddSliderController> {
                     child: InkWell(
                       onTap: () {
                         sliderC.addData(
-                            controller.active.value,
+                            controller.aktifasi.value,
                             controller.ketSlider.text,
                             controller.gambarSlider.text);
                       },
@@ -110,7 +114,7 @@ class AddSliderView extends GetView<AddSliderController> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text(
-                              'Update Slider',
+                              'Buat Slider',
                               style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.white,
@@ -126,7 +130,6 @@ class AddSliderView extends GetView<AddSliderController> {
             ),
           ),
         )));
-
   }
 }
 

@@ -1,4 +1,4 @@
-import 'dart:ui';
+
 
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,6 +20,7 @@ class HomeView extends GetView<HomeController> {
   final authC = Get.put(AuthController());
   final sliderC = Get.put(SliderController());
   final produkC = Get.put(ProdukController());
+  final controller = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -194,13 +195,18 @@ class HomeView extends GetView<HomeController> {
                 Container(
                   child: Image.asset("assets/images/kejarDiskon.png"),
                 ),
-                Container(
-                  width: lebar * 0.728,
+                FutureBuilder<QuerySnapshot<Object?>>(
+            future: produkC.getDataKejarDiskon(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                var produkDataDiskon = snapshot.data!.docs;
+                 return Container(
+                  width: lebar * 0.721,
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
-                      children: [
-                        Container(
+                      children: List.generate(produkDataDiskon.length, (index) {
+                        return Container(
                           margin: EdgeInsets.only(left: 35),
                           width: lebar * 0.35,
                           height: tinggi * 0.27,
@@ -212,11 +218,12 @@ class HomeView extends GetView<HomeController> {
                               Container(
                                 width: lebar * 0.35,
                                 height: tinggi * 0.15,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            "assets/images/softies.png"),
-                                        fit: BoxFit.fill)),
+                                // decoration: BoxDecoration(
+                                //     image: DecorationImage(
+                                //         image: AssetImage(
+                                //             "assets/images/softies.png"),
+                                //         fit: BoxFit.fill)),
+                                child: Image.network((produkDataDiskon[index].data() as Map<String, dynamic>)["gambarP"]),
                               ),
                               Row(
                                 children: [
@@ -225,7 +232,7 @@ class HomeView extends GetView<HomeController> {
                                       left: 10,
                                     ),
                                     child: Text(
-                                      "Rp. 1.000",
+                                      (produkDataDiskon[index].data() as Map<String, dynamic>)["hargaFix"].toString(),
                                       style: TextStyle(
                                           fontWeight: FontWeight.w500),
                                     ),
@@ -241,7 +248,7 @@ class HomeView extends GetView<HomeController> {
                                     padding: EdgeInsets.fromLTRB(3, 3, 3, 4),
                                     color: warnaDiskon,
                                     child: Text(
-                                      "92%",
+                                      (produkDataDiskon[index].data() as Map<String, dynamic>)["diskonP"].toString(),
                                       style: TextStyle(
                                           color: warnaMerah1,
                                           fontWeight: FontWeight.w500),
@@ -250,7 +257,7 @@ class HomeView extends GetView<HomeController> {
                                   Container(
                                     margin: EdgeInsets.only(left: 3, top: 2),
                                     child: Text(
-                                      "Rp 12.546",
+                                      (produkDataDiskon[index].data() as Map<String, dynamic>)["hargaP"].toString(),
                                       style: TextStyle(
                                           color: warnaDasar,
                                           decoration:
@@ -309,121 +316,264 @@ class HomeView extends GetView<HomeController> {
                               )
                             ],
                           ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: 15),
-                          width: lebar * 0.35,
-                          height: tinggi * 0.27,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(8)),
-                          child: Column(
-                            children: [
-                              Container(
-                                width: lebar * 0.35,
-                                height: tinggi * 0.15,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            "assets/images/indomie.png"),
-                                        fit: BoxFit.fill)),
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                      left: 10,
-                                    ),
-                                    child: Text(
-                                      "Rp. 103.000",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(left: 10, top: 5),
-                                    width: lebar * 0.07,
-                                    height: tinggi * 0.02,
-                                    padding: EdgeInsets.fromLTRB(8, 3, 6, 4),
-                                    color: warnaDiskon,
-                                    child: Text(
-                                      "6%",
-                                      style: TextStyle(
-                                          color: warnaMerah1,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 3, top: 2),
-                                    child: Text(
-                                      "Rp 109.900",
-                                      style: TextStyle(
-                                          color: warnaDasar,
-                                          decoration:
-                                              TextDecoration.lineThrough),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                        left: 9, top: 6, right: 2),
-                                    width: lebar * 0.05,
-                                    height: tinggi * 0.02,
-                                    child: Image.asset(
-                                      "assets/images/ceklis.png",
-                                      fit: BoxFit.contain,
-                                    ),
-                                  ),
-                                  Container(
-                                    child: Text(
-                                      "Jakarta Timur",
-                                      style:
-                                          TextStyle(color: Color(0xff6b6b6b)),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(top: 13),
-                                width: lebar * 0.3,
-                                child: StepProgressIndicator(
-                                  totalSteps: 100,
-                                  currentStep: 26,
-                                  size: 7,
-                                  padding: 0,
-                                  selectedColor: warnaMerah1,
-                                  unselectedColor: warnaStepKosong,
-                                  roundedEdges: Radius.circular(10),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(left: 10, top: 8),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      child: Text(
-                                        "Tersedia",
-                                        style:
-                                            TextStyle(color: Color(0xff6b6b6b)),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
+                        );
+                      }),
                     ),
                   ),
-                )
+                );
+                 //Container(
+                //     padding: EdgeInsets.fromLTRB(0, 0, 0, 24),
+                //     child: Wrap(spacing: 15, runSpacing: 20, children: List.generate(produkData.length, (index) {
+                //       return ProdukNetCard(
+                //           gambar: (produkData[index].data() as Map<String, dynamic>)["gambarP"],
+                //           daerah: 'Jakarta Pusat',
+                //           diskon: (produkData[index].data() as Map<String, dynamic>)["diskonP"].toString(),
+                //           harga: (produkData[index].data() as Map<String, dynamic>)["hargaFix"].toString(),
+                //           potongan: (produkData[index].data() as Map<String, dynamic>)["hargaP"].toString(),
+                //           produk: (produkData[index].data() as Map<String, dynamic>)["namaP"],
+                //           rating: '5.0',
+                //           tinggi: 340,
+                //           lebar: 165,
+                //           tinggiGambar: 165,
+                //           lebarGambar: 165,
+                //           marginKanan: 0,
+                //           terjual: '124');
+                //     },)));
+              } else {
+                return SizedBox();
+              }
+            },
+          ),
+                // Container(
+                //   width: lebar * 0.728,
+                //   child: SingleChildScrollView(
+                //     scrollDirection: Axis.horizontal,
+                //     child: Row(
+                //       children: [
+                //         Container(
+                //           margin: EdgeInsets.only(left: 35),
+                //           width: lebar * 0.35,
+                //           height: tinggi * 0.27,
+                //           decoration: BoxDecoration(
+                //               color: Colors.white,
+                //               borderRadius: BorderRadius.circular(8)),
+                //           child: Column(
+                //             children: [
+                //               Container(
+                //                 width: lebar * 0.35,
+                //                 height: tinggi * 0.15,
+                //                 decoration: BoxDecoration(
+                //                     image: DecorationImage(
+                //                         image: AssetImage(
+                //                             "assets/images/softies.png"),
+                //                         fit: BoxFit.fill)),
+                //               ),
+                //               Row(
+                //                 children: [
+                //                   Container(
+                //                     margin: EdgeInsets.only(
+                //                       left: 10,
+                //                     ),
+                //                     child: Text(
+                //                       "Rp. 1.000",
+                //                       style: TextStyle(
+                //                           fontWeight: FontWeight.w500),
+                //                     ),
+                //                   ),
+                //                 ],
+                //               ),
+                //               Row(
+                //                 children: [
+                //                   Container(
+                //                     margin: EdgeInsets.only(left: 10, top: 5),
+                //                     width: lebar * 0.07,
+                //                     height: tinggi * 0.02,
+                //                     padding: EdgeInsets.fromLTRB(3, 3, 3, 4),
+                //                     color: warnaDiskon,
+                //                     child: Text(
+                //                       "92%",
+                //                       style: TextStyle(
+                //                           color: warnaMerah1,
+                //                           fontWeight: FontWeight.w500),
+                //                     ),
+                //                   ),
+                //                   Container(
+                //                     margin: EdgeInsets.only(left: 3, top: 2),
+                //                     child: Text(
+                //                       "Rp 12.546",
+                //                       style: TextStyle(
+                //                           color: warnaDasar,
+                //                           decoration:
+                //                               TextDecoration.lineThrough),
+                //                     ),
+                //                   )
+                //                 ],
+                //               ),
+                //               Row(
+                //                 children: [
+                //                   Container(
+                //                     margin: EdgeInsets.only(
+                //                         left: 9, top: 6, right: 2),
+                //                     width: lebar * 0.05,
+                //                     height: tinggi * 0.02,
+                //                     child: Image.asset(
+                //                       "assets/images/ceklis.png",
+                //                       fit: BoxFit.contain,
+                //                     ),
+                //                   ),
+                //                   Container(
+                //                     child: Text(
+                //                       "Kab.Tangerang",
+                //                       style:
+                //                           TextStyle(color: Color(0xff6b6b6b)),
+                //                     ),
+                //                   )
+                //                 ],
+                //               ),
+                //               Container(
+                //                 margin: EdgeInsets.only(top: 13),
+                //                 width: lebar * 0.3,
+                //                 child: StepProgressIndicator(
+                //                   totalSteps: 100,
+                //                   currentStep: 82,
+                //                   size: 7,
+                //                   padding: 0,
+                //                   selectedColor: warnaMerah1,
+                //                   unselectedColor: warnaStepKosong,
+                //                   roundedEdges: Radius.circular(10),
+                //                 ),
+                //               ),
+                //               Container(
+                //                 margin: EdgeInsets.only(left: 10, top: 8),
+                //                 child: Row(
+                //                   children: [
+                //                     Container(
+                //                       child: Text(
+                //                         "Segera Habis",
+                //                         style:
+                //                             TextStyle(color: Color(0xff6b6b6b)),
+                //                       ),
+                //                     ),
+                //                   ],
+                //                 ),
+                //               )
+                //             ],
+                //           ),
+                //         ),
+                //         Container(
+                //           margin: EdgeInsets.only(left: 15),
+                //           width: lebar * 0.35,
+                //           height: tinggi * 0.27,
+                //           decoration: BoxDecoration(
+                //               color: Colors.white,
+                //               borderRadius: BorderRadius.circular(8)),
+                //           child: Column(
+                //             children: [
+                //               Container(
+                //                 width: lebar * 0.35,
+                //                 height: tinggi * 0.15,
+                //                 decoration: BoxDecoration(
+                //                     image: DecorationImage(
+                //                         image: AssetImage(
+                //                             "assets/images/indomie.png"),
+                //                         fit: BoxFit.fill)),
+                //               ),
+                //               Row(
+                //                 children: [
+                //                   Container(
+                //                     margin: EdgeInsets.only(
+                //                       left: 10,
+                //                     ),
+                //                     child: Text(
+                //                       "Rp. 103.000",
+                //                       style: TextStyle(
+                //                           fontWeight: FontWeight.w500),
+                //                     ),
+                //                   ),
+                //                 ],
+                //               ),
+                //               Row(
+                //                 children: [
+                //                   Container(
+                //                     margin: EdgeInsets.only(left: 10, top: 5),
+                //                     width: lebar * 0.07,
+                //                     height: tinggi * 0.02,
+                //                     padding: EdgeInsets.fromLTRB(8, 3, 6, 4),
+                //                     color: warnaDiskon,
+                //                     child: Text(
+                //                       "6%",
+                //                       style: TextStyle(
+                //                           color: warnaMerah1,
+                //                           fontWeight: FontWeight.w500),
+                //                     ),
+                //                   ),
+                //                   Container(
+                //                     margin: EdgeInsets.only(left: 3, top: 2),
+                //                     child: Text(
+                //                       "Rp 109.900",
+                //                       style: TextStyle(
+                //                           color: warnaDasar,
+                //                           decoration:
+                //                               TextDecoration.lineThrough),
+                //                     ),
+                //                   )
+                //                 ],
+                //               ),
+                //               Row(
+                //                 children: [
+                //                   Container(
+                //                     margin: EdgeInsets.only(
+                //                         left: 9, top: 6, right: 2),
+                //                     width: lebar * 0.05,
+                //                     height: tinggi * 0.02,
+                //                     child: Image.asset(
+                //                       "assets/images/ceklis.png",
+                //                       fit: BoxFit.contain,
+                //                     ),
+                //                   ),
+                //                   Container(
+                //                     child: Text(
+                //                       "Jakarta Timur",
+                //                       style:
+                //                           TextStyle(color: Color(0xff6b6b6b)),
+                //                     ),
+                //                   )
+                //                 ],
+                //               ),
+                //               Container(
+                //                 margin: EdgeInsets.only(top: 13),
+                //                 width: lebar * 0.3,
+                //                 child: StepProgressIndicator(
+                //                   totalSteps: 100,
+                //                   currentStep: 26,
+                //                   size: 7,
+                //                   padding: 0,
+                //                   selectedColor: warnaMerah1,
+                //                   unselectedColor: warnaStepKosong,
+                //                   roundedEdges: Radius.circular(10),
+                //                 ),
+                //               ),
+                //               Container(
+                //                 margin: EdgeInsets.only(left: 10, top: 8),
+                //                 child: Row(
+                //                   children: [
+                //                     Container(
+                //                       child: Text(
+                //                         "Tersedia",
+                //                         style:
+                //                             TextStyle(color: Color(0xff6b6b6b)),
+                //                       ),
+                //                     ),
+                //                   ],
+                //                 ),
+                //               )
+                //             ],
+                //           ),
+                //         )
+                //       ],
+                //     ),
+                //   ),
+                // )
               ],
             ),
           ),
@@ -513,14 +663,14 @@ class HomeView extends GetView<HomeController> {
                       width: 25,
                     ),
                     ProdukCard(
-                        produk: 'Logitech G603 Lightspeed High DPI',
-                        daerah: 'Kab. Bandung',
-                        diskon: '44%',
-                        gambar: 'assets/images/lightspeedMouse.png',
-                        harga: 'Rp 609.000',
-                        potongan: 'Rp 1.000.000',
-                        rating: '4.8',
-                        terjual: '312'),
+                      produk: 'Logitech G603 Lightspeed High DPI',
+                      daerah: 'Kab. Bandung',
+                      diskon: '44%',
+                      gambar: 'assets/images/lightspeedMouse.png',
+                      harga: 'Rp 609.000',
+                      potongan: 'Rp 1.000.000',
+                      rating: '4.8',
+                      terjual: '312'),
                     ProdukCard(
                         produk: 'Logitech G203 Mouse Gaming',
                         daerah: 'Kab. Bandung',
@@ -583,33 +733,36 @@ class HomeView extends GetView<HomeController> {
               ),
             ),
           ),
-          FutureBuilder<QuerySnapshot<Object?>>(
-            future: produkC.getData(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                var produkData = snapshot.data!.docs;
-                return Container(
-                    padding: EdgeInsets.fromLTRB(0, 0, 0, 24),
-                    child: Wrap(spacing: 15, runSpacing: 20, children: List.generate(produkData.length, (index) {
-                      return ProdukNetCard(
-                          gambar: (produkData[index].data() as Map<String, dynamic>)["gambarP"],
-                          daerah: 'Jakarta Pusat',
-                          diskon: (produkData[index].data() as Map<String, dynamic>)["diskonP"].toString(),
-                          harga: (produkData[index].data() as Map<String, dynamic>)["hargaFix"].toString(),
-                          potongan: (produkData[index].data() as Map<String, dynamic>)["hargaP"].toString(),
-                          produk: (produkData[index].data() as Map<String, dynamic>)["namaP"],
-                          rating: '5.0',
-                          tinggi: 340,
-                          lebar: 165,
-                          tinggiGambar: 165,
-                          lebarGambar: 165,
-                          marginKanan: 0,
-                          terjual: '124');
-                    },)));
-              } else {
-                return SizedBox();
-              }
-            },
+          InkWell(
+            onTap: () => Get.toNamed(Routes.DETAIL, arguments: produkC),
+            child: FutureBuilder<QuerySnapshot<Object?>>(
+              future: produkC.getData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  var produkData = snapshot.data!.docs;
+                  return Container(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 24),
+                      child: Wrap(spacing: 15, runSpacing: 20, children: List.generate(produkData.length, (index) {
+                        return ProdukNetCard(
+                            gambar: (produkData[index].data() as Map<String, dynamic>)["gambarP"],
+                            daerah: 'Jakarta Pusat',
+                            diskon: (produkData[index].data() as Map<String, dynamic>)["diskonP"].toString(),
+                            harga: (produkData[index].data() as Map<String, dynamic>)["hargaFix"].toString(),
+                            potongan: (produkData[index].data() as Map<String, dynamic>)["hargaP"].toString(),
+                            produk: (produkData[index].data() as Map<String, dynamic>)["namaP"],
+                            rating: '5.0',
+                            tinggi: 340,
+                            lebar: 165,
+                            tinggiGambar: 165,
+                            lebarGambar: 165,
+                            marginKanan: 0,
+                            terjual: '124');
+                      },)));
+                } else {
+                  return SizedBox();
+                }
+              },
+            ),
           ),
           Container(
             padding: EdgeInsets.fromLTRB(0, 0, 0, 24),

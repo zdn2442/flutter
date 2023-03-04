@@ -1,16 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-class AddSliderController extends GetxController {
-  //TODO: Implement AddSliderController
-  final active = true.obs;
-  changeActivation() => active.toggle();
+import '../../../controllers/slider_controller.dart';
+
+class CreateSliderController extends GetxController {
+  //TODO: Implement CreateSliderController
+  final aktifasi = true.obs;
+  changeActivation() => aktifasi.toggle();
+
   TextEditingController gambarSlider = TextEditingController();
   TextEditingController ketSlider = TextEditingController();
 
-
-  RxBool aktif = true.obs;
-  onChange() => aktif.toggle();
+  uploadGambar() async{
+    final data = SliderController().addPhoto();
+    gambarSlider.text = data;
+  }
 
   final count = 0.obs;
   @override

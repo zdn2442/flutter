@@ -29,8 +29,9 @@ class SliderDataView extends GetView<SliderDataController> {
                 itemBuilder: (context, index) => ListTile(
                   leading: Image.network((listData[index].data()
                       as Map<String, dynamic>)["gambarSlider"]),
-                  onTap: () => sliderC.updateData(
-                      listData[index].id, true, 'edit', 'edit'),
+                  onTap: () => Get.toNamed(Routes.ADD_SLIDER),
+                  // sliderC.updateData(
+                  //     listData[index].id, true, 'edit', 'edit'),
                   onLongPress: () => Get.defaultDialog(
                       title: "Really Want To Delete It?",
                       middleText: 'are youe sure want to delete this data?',
@@ -47,7 +48,8 @@ class SliderDataView extends GetView<SliderDataController> {
                           child: Text('No'))),
                   title: Text((listData[index].data()
                       as Map<String, dynamic>)["ketSlider"]),
-                  subtitle: Text(""),
+                  subtitle: Text((listData[index].data()
+                      as Map<String, dynamic>)["aktifSlider"].toString()),
                 ),
               );
             } else {
@@ -57,7 +59,7 @@ class SliderDataView extends GetView<SliderDataController> {
             }
           }),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed(Routes.ADD_SLIDER),
+        onPressed: () => Get.toNamed(Routes.CREATE_SLIDER),
         child: Icon(Icons.add),
       ),
     );

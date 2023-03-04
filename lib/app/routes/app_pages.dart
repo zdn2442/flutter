@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import 'package:tokped/app/modules/add_slider/bindings/add_slider_binding.dart';
 import 'package:tokped/app/modules/add_slider/views/add_slider_view.dart';
+import 'package:tokped/app/modules/create_slider/bindings/create_slider_binding.dart';
+import 'package:tokped/app/modules/create_slider/views/create_slider_view.dart';
 import 'package:tokped/app/modules/detail/bindings/detail_binding.dart';
 import 'package:tokped/app/modules/detail/views/detail_view.dart';
 import 'package:tokped/app/modules/forgotPass/bindings/forgot_pass_binding.dart';
@@ -92,6 +94,11 @@ class AppPages {
       name: _Paths.ADD_SLIDER,
       page: () => AddSliderView(),
       binding: AddSliderBinding(),
+    ),
+    GetPage(
+      name: _Paths.CREATE_SLIDER,
+      page: () => CreateSliderView(),
+      binding: CreateSliderBinding(),
     ),
   ];
 }

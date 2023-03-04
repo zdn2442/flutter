@@ -1,13 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:tokped/app/controllers/produk_controller.dart';
 import 'package:tokped/app/routes/app_pages.dart';
 
 import '../../../../config/warna.dart';
 import '../controllers/detail_controller.dart';
 
 class DetailView extends GetView<DetailController> {
+   final produkC = ProdukController();
   @override
   Widget build(BuildContext context) {
     double tinggi = MediaQuery.of(context).size.height;
@@ -74,13 +77,27 @@ class DetailView extends GetView<DetailController> {
                 ],
               ),
             ),
-            Container(
-              width: lebar * 0.99,
-              height: tinggi * 0.45,
-              child: Image.asset(
-                "assets/images/parfum.png",
-                fit: BoxFit.cover,
-              ),
+            /////////////////////////////////////////////////////////////////////////////
+            FutureBuilder<QuerySnapshot<Object?>>(
+              future: produkC.getData(),
+              builder: (context, snapshot) {
+                if(snapshot.connectionState == ConnectionState.done){
+                  var produkData = snapshot.data!.docs;
+                  return Container(
+                    child: Row(
+                      children: List.generate(produkData.length, (index) {
+                    return Gambar(
+                      gambar: (produkData[index].data() as Map<String, dynamic>)["gambarP"],
+                      lebarNya: lebar * 0.99,
+                      tinggiNya: tinggi * 0.45
+                    );
+                  }),
+                    ),
+                  );
+                } else {
+                 return SizedBox();
+                }
+              },
             ),
             Container(
               margin: EdgeInsets.only(top: 15, left: 30, right: 30),
@@ -1008,4 +1025,15 @@ Widget DiskusiUser(
       ],
     ),
   );
+}
+
+Widget Gambar ({gambar, lebarNya, tinggiNya}){
+  return Container(
+              width: lebarNya,
+              height: tinggiNya,
+              child: Image.network(
+                gambar,
+                fit: BoxFit.cover,
+              ),
+            );
 }
