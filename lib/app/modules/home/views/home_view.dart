@@ -733,36 +733,34 @@ class HomeView extends GetView<HomeController> {
               ),
             ),
           ),
-          InkWell(
-            onTap: () => Get.toNamed(Routes.DETAIL, arguments: produkC),
-            child: FutureBuilder<QuerySnapshot<Object?>>(
-              future: produkC.getData(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  var produkData = snapshot.data!.docs;
-                  return Container(
-                      padding: EdgeInsets.fromLTRB(0, 0, 0, 24),
-                      child: Wrap(spacing: 15, runSpacing: 20, children: List.generate(produkData.length, (index) {
-                        return ProdukNetCard(
-                            gambar: (produkData[index].data() as Map<String, dynamic>)["gambarP"],
-                            daerah: 'Jakarta Pusat',
-                            diskon: (produkData[index].data() as Map<String, dynamic>)["diskonP"].toString(),
-                            harga: (produkData[index].data() as Map<String, dynamic>)["hargaFix"].toString(),
-                            potongan: (produkData[index].data() as Map<String, dynamic>)["hargaP"].toString(),
-                            produk: (produkData[index].data() as Map<String, dynamic>)["namaP"],
-                            rating: '5.0',
-                            tinggi: 340,
-                            lebar: 165,
-                            tinggiGambar: 165,
-                            lebarGambar: 165,
-                            marginKanan: 0,
-                            terjual: '124');
-                      },)));
-                } else {
-                  return SizedBox();
-                }
-              },
-            ),
+          FutureBuilder<QuerySnapshot<Object?>>(
+            future: produkC.getData(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                var produkData = snapshot.data!.docs;
+                return Container(
+                    padding: EdgeInsets.fromLTRB(0, 0, 0, 24),
+                    child: Wrap(spacing: 15, runSpacing: 20, children: List.generate(produkData.length, (index) {
+                      return ProdukNetCard(
+                          gambar: (produkData[index].data() as Map<String, dynamic>)["gambarP"],
+                          daerah: 'Jakarta Pusat',
+                          diskon: (produkData[index].data() as Map<String, dynamic>)["diskonP"].toString(),
+                          harga: (produkData[index].data() as Map<String, dynamic>)["hargaFix"].toString(),
+                          potongan: (produkData[index].data() as Map<String, dynamic>)["hargaP"].toString(),
+                          produk: (produkData[index].data() as Map<String, dynamic>)["namaP"],
+                          rating: '5.0',
+                          tinggi: 340,
+                          lebar: 165,
+                          arguments: produkData[index],
+                          tinggiGambar: 165,
+                          lebarGambar: 165,
+                          marginKanan: 0,
+                          terjual: '124');
+                    },)));
+              } else {
+                return SizedBox();
+              }
+            },
           ),
           Container(
             padding: EdgeInsets.fromLTRB(0, 0, 0, 24),
@@ -1167,6 +1165,7 @@ Widget ProdukNetCard(
     terjual,
     rating,
     produk,
+    arguments,
     double lebar = 146,
     double tinggi = 316,
     double lebarGambar = 146,
@@ -1182,124 +1181,127 @@ Widget ProdukNetCard(
 // void main() {
 //   print(truncate('Hello, World!', length: 4));
 // }
-  return Container(
-    margin: EdgeInsets.only(right: marginKanan),
-    // padding: EdgeInsets.symmetric(vertical: 10),
-    width: lebar,
-    height: tinggi,
-    decoration: BoxDecoration(boxShadow: [
-      BoxShadow(
-        color: Colors.grey.withOpacity(0.5),
-        spreadRadius: 5,
-        blurRadius: 7,
-        offset: Offset(0, 0), // changes position of shadow
-      ),
-    ], borderRadius: BorderRadius.circular(8), color: Colors.white),
-    child: Column(
-      children: [
-        Container(
-          width: lebarGambar,
-          height: tinggiGambar,
-          child: Image.network(gambar),
+  return InkWell(
+    onTap: () => Get.toNamed(Routes.DETAIL, arguments: arguments),
+    child: Container(
+      margin: EdgeInsets.only(right: marginKanan),
+      // padding: EdgeInsets.symmetric(vertical: 10),
+      width: lebar,
+      height: tinggi,
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.5),
+          spreadRadius: 5,
+          blurRadius: 7,
+          offset: Offset(0, 0), // changes position of shadow
         ),
-        Container(
-          width: double.infinity,
-          padding: EdgeInsets.fromLTRB(10, 12, 10, 12),
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(bottom: 10),
-                alignment: Alignment.centerLeft,
-                child: Text(truncate(produk, length: 25),
-                    style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  harga,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+      ], borderRadius: BorderRadius.circular(8), color: Colors.white),
+      child: Column(
+        children: [
+          Container(
+            width: lebarGambar,
+            height: tinggiGambar,
+            child: Image.network(gambar),
+          ),
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.fromLTRB(10, 12, 10, 12),
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  alignment: Alignment.centerLeft,
+                  child: Text(truncate(produk, length: 25),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.only(bottom: 6, top: 6),
-                child: Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(right: 6),
-                      width: 36,
-                      height: 20,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadiusDirectional.circular(2),
-                          color: warnaDiskon),
-                      child: Center(
-                        child: Text(
-                          '$diskon%',
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: warnaMerah1),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    harga,
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(bottom: 6, top: 6),
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 6),
+                        width: 36,
+                        height: 20,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadiusDirectional.circular(2),
+                            color: warnaDiskon),
+                        child: Center(
+                          child: Text(
+                            '$diskon%',
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: warnaMerah1),
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      child: Text(
-                        potongan,
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            decoration: TextDecoration.lineThrough,
-                            color: Color(0xff6b6b6b)),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(bottom: 16),
-                child: Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(right: 2),
-                      child: Image.asset('assets/images/merchant.png'),
-                    ),
-                    Container(
-                      child: Text(
-                        daerah,
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xff6b6b6b)),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Row(
-                  children: [
-                    Container(
-                        margin: EdgeInsets.only(right: 4),
-                        child: Icon(
-                          CupertinoIcons.star_fill,
-                          color: Color(0xffffc400),
-                          size: 13,
-                        )),
-                    Container(
-                      child: Text('$rating | Terjual $terjual',
+                      Container(
+                        child: Text(
+                          potongan,
                           style: TextStyle(
-                              fontSize: 10,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
-                              color: Color(0xff6b6b6b))),
-                    ),
-                  ],
+                              decoration: TextDecoration.lineThrough,
+                              color: Color(0xff6b6b6b)),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        )
-      ],
+                Container(
+                  margin: EdgeInsets.only(bottom: 16),
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 2),
+                        child: Image.asset('assets/images/merchant.png'),
+                      ),
+                      Container(
+                        child: Text(
+                          daerah,
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xff6b6b6b)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.only(right: 4),
+                          child: Icon(
+                            CupertinoIcons.star_fill,
+                            color: Color(0xffffc400),
+                            size: 13,
+                          )),
+                      Container(
+                        child: Text('$rating | Terjual $terjual',
+                            style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xff6b6b6b))),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     ),
   );
 }

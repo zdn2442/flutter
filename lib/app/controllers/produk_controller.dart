@@ -56,8 +56,8 @@ class ProdukController extends GetxController {
     }
   }
 
-  
-}
-class Detail{
-    
+  Future<QuerySnapshot<Object?>> detailKejarDiskon() async {
+    CollectionReference diskon = firestore.collection("produk");
+    return await diskon.where('flashSale', isEqualTo: true).get();
   }
+}

@@ -10,7 +10,8 @@ import '../../../../config/warna.dart';
 import '../controllers/detail_controller.dart';
 
 class DetailView extends GetView<DetailController> {
-   final produkC = ProdukController();
+  final produkC = ProdukController();
+  final data = Get.arguments;
   @override
   Widget build(BuildContext context) {
     double tinggi = MediaQuery.of(context).size.height;
@@ -78,26 +79,14 @@ class DetailView extends GetView<DetailController> {
               ),
             ),
             /////////////////////////////////////////////////////////////////////////////
-            FutureBuilder<QuerySnapshot<Object?>>(
-              future: produkC.getData(),
-              builder: (context, snapshot) {
-                if(snapshot.connectionState == ConnectionState.done){
-                  var produkData = snapshot.data!.docs;
-                  return Container(
-                    child: Row(
-                      children: List.generate(produkData.length, (index) {
-                    return Gambar(
-                      gambar: (produkData[index].data() as Map<String, dynamic>)["gambarP"],
-                      lebarNya: lebar * 0.99,
-                      tinggiNya: tinggi * 0.45
-                    );
-                  }),
-                    ),
-                  );
-                } else {
-                 return SizedBox();
-                }
-              },
+
+            Container(
+              width: lebar * 0.99,
+              height: tinggi * 0.45,
+              child: Image.network(
+                data['gambarP'],
+                fit: BoxFit.cover,
+              ),
             ),
             Container(
               margin: EdgeInsets.only(top: 15, left: 30, right: 30),
@@ -105,7 +94,7 @@ class DetailView extends GetView<DetailController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Rp370.000",
+                    data['hargaFix'].toString(),
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
                   ),
                   Icon(
@@ -122,7 +111,7 @@ class DetailView extends GetView<DetailController> {
                   Container(
                     width: lebar * 0.8,
                     child: Text(
-                      "Mine. Perfumery ETHEREAL - 50ml Eau De Parfum",
+                      data['namaP'],
                       style: TextStyle(
                         fontSize: 20,
                       ),
@@ -731,97 +720,97 @@ class DetailView extends GetView<DetailController> {
               height: tinggi * 0.01,
               color: warnaStepKosong,
             ),
-             Container(
-                  padding: EdgeInsets.fromLTRB(24, 0, 24, 0),
-                  margin: EdgeInsets.only(bottom: 30, top: 20),
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(right: 12),
-                        child: Icon(
-                          CupertinoIcons.info_circle,
-                          size: 24,
-                        ),
-                      ),
-                      Container(
-                        child: RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(
-                            text: 'Produk bermasalah? ',
+            Container(
+              padding: EdgeInsets.fromLTRB(24, 0, 24, 0),
+              margin: EdgeInsets.only(bottom: 30, top: 20),
+              child: Row(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(right: 12),
+                    child: Icon(
+                      CupertinoIcons.info_circle,
+                      size: 24,
+                    ),
+                  ),
+                  Container(
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        text: 'Produk bermasalah? ',
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black),
+                        children: [
+                          TextSpan(
+                            text: 'Laporkan',
                             style: TextStyle(
                                 fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black),
-                            children: [
-                              TextSpan(
-                                text: 'Laporkan',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: bgNav),
-                              ),
-                            ],
+                                fontWeight: FontWeight.w500,
+                                color: bgNav),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(24, 16, 24, 16),
-                  decoration: BoxDecoration(
-                      border: Border(
-                          top: BorderSide(width: 1, color: Color(0xffeeeeee)))),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(width: 1.5, color: abuAbu)),
-                        child: Center(
-                          child: Icon(
-                            CupertinoIcons.chat_bubble_text,
-                            size: 26,
-                          ),
-                        ),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(24, 16, 24, 16),
+              decoration: BoxDecoration(
+                  border: Border(
+                      top: BorderSide(width: 1, color: Color(0xffeeeeee)))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(width: 1.5, color: abuAbu)),
+                    child: Center(
+                      child: Icon(
+                        CupertinoIcons.chat_bubble_text,
+                        size: 26,
                       ),
-                      Container(
-                        width: lebar * 0.35,
-                        height: 50,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(width: 1.5, color: bgNav)),
-                        child: Center(
-                            child: Text(
-                          'Beli Langsung',
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: bgNav),
-                        )),
-                      ),
-                      Container(
-                        width: lebar * 0.35,
-                        height: 50,
-                        decoration: BoxDecoration(
-                            color: bgNav,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(width: 1.5, color: bgNav)),
-                        child: Center(
-                            child: Text(
-                          '+Keranjang',
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white),
-                        )),
-                      ),
-                    ],
+                    ),
                   ),
-                )
+                  Container(
+                    width: lebar * 0.35,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(width: 1.5, color: bgNav)),
+                    child: Center(
+                        child: Text(
+                      'Beli Langsung',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: bgNav),
+                    )),
+                  ),
+                  Container(
+                    width: lebar * 0.35,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        color: bgNav,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(width: 1.5, color: bgNav)),
+                    child: Center(
+                        child: Text(
+                      '+Keranjang',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white),
+                    )),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
@@ -829,9 +818,7 @@ class DetailView extends GetView<DetailController> {
   }
 }
 
-
 //custom widget space
-
 
 Widget ProdukCard(
     {gambar,
@@ -1025,15 +1012,4 @@ Widget DiskusiUser(
       ],
     ),
   );
-}
-
-Widget Gambar ({gambar, lebarNya, tinggiNya}){
-  return Container(
-              width: lebarNya,
-              height: tinggiNya,
-              child: Image.network(
-                gambar,
-                fit: BoxFit.cover,
-              ),
-            );
 }
