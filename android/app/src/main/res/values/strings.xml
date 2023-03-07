@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resource>
+    <string name="app_name">tokped_2</string>
+    <string name="facebook_app_id">8958854744156082</string>
+    <string name="fb_login_protocol_scheme">fb8958854744156082</string>
+    <string name="facebook_client_token">f9b09f3d1f108b28db4579385881e96a</string>
+</resource>
